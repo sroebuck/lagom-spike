@@ -32,7 +32,7 @@ lazy val spreadImpl = project("spread-impl")
   .settings(
     libraryDependencies += lagomJavadslTestKit
   )
-  .dependsOn(spreadApi)
+  .dependsOn(spreadApi, trafficApi)
 
 lazy val trafficApi = project("traffic-api")
   .settings(version := "1.0-SNAPSHOT")
@@ -52,7 +52,7 @@ lazy val trafficImpl = project("traffic-impl")
     )
   )
   .settings(lagomForkedTestSettings: _*)
-  .dependsOn(trafficApi)
+  .dependsOn(trafficApi, echoApi)
 
 def project(id: String) = Project(id, base = file(id))
   .settings(javacOptions in compile ++= Seq(

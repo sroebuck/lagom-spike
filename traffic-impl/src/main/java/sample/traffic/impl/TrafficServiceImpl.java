@@ -2,6 +2,7 @@ package sample.traffic.impl;
 
 import akka.NotUsed;
 import com.lightbend.lagom.javadsl.api.ServiceCall;
+import com.lightbend.lagom.javadsl.persistence.PersistentEntityRef;
 import com.lightbend.lagom.javadsl.persistence.PersistentEntityRegistry;
 import sample.echo.api.EchoService;
 import sample.traffic.api.TrafficService;
@@ -21,13 +22,17 @@ public class TrafficServiceImpl implements TrafficService {
             EchoService echoService) {
         this.echoService = echoService;
         this.persistentEntityRegistry = persistentEntityRegistry;
+
+        persistentEntityRegistry.register(TrafficEntity.class);
     }
 
     @Override
     public ServiceCall<NotUsed, String> traffic(String message) {
         return request -> {
-            echoService.echo(message).invoke();
-            return completedFuture("traffic: " + message);
+            PersistentEntityRef<TrafficCommands> ref =
+                    persistentEntityRegistry.refFor(TrafficEntity.class, message.substring(message.length() - 1));
+            final CommandTraffic cmd = CommandTraffic.of(message);
+            return ref.ask(cmd).thenApply(ack -> "traffic: " + message);
         };
     }
 }

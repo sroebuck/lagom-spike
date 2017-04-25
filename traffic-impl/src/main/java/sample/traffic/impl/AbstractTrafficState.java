@@ -13,6 +13,9 @@ import java.util.Optional;
 public interface AbstractTrafficState extends Jsonable {
 
     @Value.Parameter
+    Optional<String> currentMessageOpt();
+
+    @Value.Parameter
     Optional<String> lastMessageOpt();
 
 }

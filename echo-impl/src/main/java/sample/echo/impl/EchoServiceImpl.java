@@ -18,8 +18,9 @@ public class EchoServiceImpl implements EchoService {
     @Override
     public ServiceCall<NotUsed, String> echo(String message) {
         return request -> {
-            log.info("message: " + message);
-            return completedFuture("message: " + message);
+            final String entityHashCode = Integer.toHexString(System.identityHashCode(this));
+            log.info("echo [{}]: {}", entityHashCode, message);
+            return completedFuture("echo: " + message);
         };
     }
 

@@ -19,7 +19,7 @@ public class EchoServiceImpl implements EchoService {
     public ServiceCall<NotUsed, String> echo(String message) {
         return request -> {
             final String entityHashCode = Integer.toHexString(System.identityHashCode(this));
-            log.info("echo [{}]: {}", entityHashCode, message);
+            log.warn("echo [{}]: {}", entityHashCode, message);
             return completedFuture("echo: " + message);
         };
     }

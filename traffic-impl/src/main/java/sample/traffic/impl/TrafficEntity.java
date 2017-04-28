@@ -33,8 +33,9 @@ public class TrafficEntity extends PersistentEntity<TrafficCommands, TrafficEven
                         final String combined = state().lastMessageOpt().isPresent() ?
                                 state().lastMessageOpt().get() + " -> " + cmd.message() : cmd.message();
                         final String entityHashCode = Integer.toHexString(System.identityHashCode(this));
-                        log.info("traffic-{} [{}]: {}", this.entityId(), entityHashCode, combined);
-                        echoService.echo(combined).invoke();
+                        log.warn("traffic-{} [{}]: {}", this.entityId(), entityHashCode, combined);
+                        final String combinedWithTrafficClassHash = combined + "@" + entityHashCode;
+                        echoService.echo(combinedWithTrafficClassHash).invoke();
                         ctx.reply(Done.getInstance());
                     })
             );

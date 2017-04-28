@@ -27,7 +27,7 @@ public class SpreadServiceImpl implements SpreadService {
     public ServiceCall<NotUsed, String> spread(String message) {
         return request -> {
             final String entityHashCode = Integer.toHexString(System.identityHashCode(this));
-            log.info("spread [{}]: {}", entityHashCode, message);
+            log.warn("spread [{}]: {}", entityHashCode, message);
 
             final char[] chars = {'A','B','C','D','E','F','G','H'};
             for (char c: chars) {

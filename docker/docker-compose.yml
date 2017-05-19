@@ -1,0 +1,23 @@
+version: '3'
+services:
+  gateway:
+    image: spike/proxy
+    links:
+      - service-locator
+    ports:
+      - "9000:9000"
+  service-locator:
+    image: consul:0.8.3
+    container_name: consul
+    hostname: locator
+    ports:
+      - 8500:8500
+      - 8600:53/udp
+  backend-echo:
+    image: spike/echo
+    hostname: backend-echo
+    environment:
+      SERVICE_TAGS: backend
+      SERVICE_NAME: echoservice
+    ports:
+      - 9000

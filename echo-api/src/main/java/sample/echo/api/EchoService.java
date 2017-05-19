@@ -11,11 +11,13 @@ import static com.lightbend.lagom.javadsl.api.Service.pathCall;
 public interface EchoService extends Service {
 
     ServiceCall<NotUsed, String> echo(String message);
+    ServiceCall<NotUsed, String> health();
 
     @Override
     default Descriptor descriptor() {
-        return named("echoservice").withCalls(
-            pathCall("/api/echo/:message", this::echo)
+        return named("echo").withCalls(
+            pathCall("/echo/:message", this::echo),
+            pathCall("/health", this::health)
         ).withAutoAcl(true);
     }
 

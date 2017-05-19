@@ -19,4 +19,4 @@ ENV LISTEN 0.0.0.0
 ENV CONSUL locator
 
 EXPOSE $PORT
-CMD $SCRIPT -Dplay.crypto.secret=$SECRET -Dhttp.port=$PORT -Dhttp.server=$LISTEN -Dlagom.discovery.consul.agent-hostname=$CONSUL
+CMD $SCRIPT -Dplay.crypto.secret=$SECRET -Dhttp.port=$PORT -Dhttp.server=$LISTEN

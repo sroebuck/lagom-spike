@@ -3,13 +3,12 @@ organization in ThisBuild := "sample.helloworld"
 // the Scala version that will be used for cross-compiled libraries
 scalaVersion in ThisBuild := "2.11.8"
 
-lazy val locatorService = scalaProject("lagom-service-locator-consul")
+lazy val locatorService = scalaProject("lagom-service-locator-consul-java")
   .settings(version := "1.0-SNAPSHOT")
   .settings(
     libraryDependencies ++= Seq(
       lagomJavadslApi,
-      "com.ecwid.consul"     % "consul-api"        % "1.1.11",
-      "org.scalatest"       %% "scalatest"         % "2.2.4" % Test
+      "com.ecwid.consul" % "consul-api" % "1.1.11"
     )
   )
 
@@ -21,7 +20,7 @@ lazy val echoApi = project("echo-api")
 
 lazy val echoImpl = project("echo-impl")
   .settings(version := "1.0-SNAPSHOT")
-  .enablePlugins(LagomJava)
+  .enablePlugins(LagomJava && LagomPlay)
   .settings(
     libraryDependencies += lagomJavadslTestKit
   )
